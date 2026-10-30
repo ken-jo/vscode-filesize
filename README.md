@@ -59,8 +59,8 @@ Did something nice with the code? Please send a [pull request](https://github.co
 
 [MIT](LICENSE)
 
-## Ken fork: creation date in the status bar
+## File Info fork
 
-This fork shows the active local file's creation date next to its size by default. Set `filesize.showCreatedInStatusBar` to `false` to hide it. Click the status bar item for the detailed output, including the full creation timestamp. The date comes from the file system's birth time, which may be unavailable or reflect a copy rather than the original creation date.
+File Info shows the active local file's creation date next to its size by default. Set `fileinfo.showCreatedInStatusBar` to `false` to hide it. Click the status bar item for details, including the full creation timestamp. The date comes from the file system's birth time, which may be unavailable or reflect a copy rather than the original creation date.
 
-To install the packaged fork, disable the original `mkxml.vscode-filesize` extension first, then use **Extensions: Install from VSIX...** and select the `.vsix` file. Open a saved file and look at the left side of the status bar.
+Install the VSIX with **Extensions: Install from VSIX...**. File Info can be installed alongside the original filesize extension; both may display status bar items.

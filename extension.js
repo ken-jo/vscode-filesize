@@ -10,7 +10,7 @@ var cachedLocation = 'left';
 var statusBarItem, oc, info, config, isShowingDetailedInfo;
 
 function updateConfig() {
-  var configuration = workspace.getConfiguration('filesize');
+  var configuration = workspace.getConfiguration('fileinfo');
   config = {
     useDecimal: configuration.get('useDecimal'),
     use24HourFormat: configuration.get('use24HourFormat'),
@@ -71,7 +71,7 @@ function updateStatusBarItem() {
     } else {
       statusBarItem = window.createStatusBarItem(vscode.StatusBarAlignment.Left, 1);
     }
-    statusBarItem.command = 'kenFilesize.toggleFilesizeInfo';
+    statusBarItem.command = 'fileinfo.showDetails';
     statusBarItem.tooltip = 'Current file size - Click to toggle more info';
   }
   try {
@@ -126,15 +126,15 @@ function toggleDetailedInfo() {
 
 // Called when VS Code activates the extension
 function activate(context) {
-  console.log('filesize is active');
+  console.log('File Info is active');
 
   // Set up statusBarItem
   statusBarItem = window.createStatusBarItem(vscode.StatusBarAlignment.Left, 1);
-  statusBarItem.command = 'kenFilesize.toggleFilesizeInfo';
+  statusBarItem.command = 'fileinfo.showDetails';
   statusBarItem.tooltip = 'Current file size - Click to toggle more info';
 
   // Global OutputChannel to be used for the extension detailed info
-  oc = window.createOutputChannel('filesize');
+  oc = window.createOutputChannel('File Info');
 
   // Update handlers
   var onSave = workspace.onDidSaveTextDocument(updateStatusBarItem);
@@ -142,7 +142,7 @@ function activate(context) {
   var onChangeConfig = workspace.onDidChangeConfiguration(updateConfig);
 
   // Show detailed info through custom command
-  var command = vscode.commands.registerCommand('kenFilesize.toggleFilesizeInfo', toggleDetailedInfo);
+  var command = vscode.commands.registerCommand('fileinfo.showDetails', toggleDetailedInfo);
 
   // Register disposables that get disposed when deactivating
   context.subscriptions.push(onSave);

@@ -1,8 +1,8 @@
 {
-  "name": "vscode-filesize",
-  "displayName": "filesize (Ken fork)",
-  "description": "Show the current file size in the status bar",
-  "version": "3.2.3",
+  "name": "fileinfo",
+  "displayName": "File Info",
+  "description": "Show file size and creation date in the status bar",
+  "version": "3.2.4",
   "icon": "icon.png",
   "publisher": "ken-jo",
   "repository": {
@@ -33,63 +33,55 @@
   "contributes": {
     "commands": [
       {
-        "command": "kenFilesize.toggleFilesizeInfo",
-        "title": "Toggle filesize detailed information"
-      }
-    ],
-    "keybindings": [
-      {
-        "command": "kenFilesize.toggleFilesizeInfo",
-        "key": "ctrl+shift+'",
-        "mac": "cmd+shift+'",
-        "when": "editorTextFocus"
+        "command": "fileinfo.showDetails",
+        "title": "File Info: Toggle Detailed Information"
       }
     ],
     "configuration": {
       "type": "object",
-      "title": "filesize configuration",
+      "title": "File Info",
       "properties": {
-        "filesize.useDecimal": {
+        "fileinfo.useDecimal": {
           "type": "boolean",
           "default": false,
           "description": "Defaults to false, using IEC's representation. Set to true to get SI representation."
         },
-        "filesize.use24HourFormat": {
+        "fileinfo.use24HourFormat": {
           "type": "boolean",
           "default": true,
           "description": "Defaults to true, using 24-hour format. Set to false to get 12-hour format."
         },
-        "filesize.showGzip": {
+        "fileinfo.showGzip": {
           "type": "boolean",
           "default": true,
           "description": "Defaults to true, whether to show gzip size in detailed view or not."
         },
-        "filesize.showBrotli": {
+        "fileinfo.showBrotli": {
           "type": "boolean",
           "default": false,
           "description": "Defaults to false, whether to show brotli size in the detailed view."
         },
-        "filesize.showRawInBytes": {
+        "fileinfo.showRawInBytes": {
           "type": "boolean",
           "default": false,
           "description": "Defaults to false, whether to show raw size in bytes in the detailed view."
         },
-        "filesize.showCreatedInStatusBar": {
+        "fileinfo.showCreatedInStatusBar": {
           "type": "boolean",
           "default": true,
           "description": "Show the active file's creation date in the status bar when available."
         },
-        "filesize.showGzipInStatusBar": {
+        "fileinfo.showGzipInStatusBar": {
           "type": "boolean",
           "default": false,
           "description": "Defaults to false, whether to show gzip size in the status bar."
         },
-        "filesize.showBrotliInStatusBar": {
+        "fileinfo.showBrotliInStatusBar": {
           "type": "boolean",
           "default": false,
           "description": "Defaults to false, whether to show brotli size in the status bar."
         },
-        "filesize.displayInfoOnTheRightSideOfStatusBar": {
+        "fileinfo.displayInfoOnTheRightSideOfStatusBar": {
           "type": "boolean",
           "default": false,
           "description": "Defaults to false, whether to show the filesize info on the right side of the status bar."
