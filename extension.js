@@ -19,6 +19,7 @@ function updateConfig() {
     showGzipInStatusBar: configuration.get('showGzipInStatusBar'),
     showBrotliInStatusBar: configuration.get('showBrotliInStatusBar'),
     showRawInBytes: configuration.get('showRawInBytes'),
+    showCreatedInStatusBar: configuration.get('showCreatedInStatusBar'),
     displayInfoOnTheRightSideOfStatusBar: configuration.get('displayInfoOnTheRightSideOfStatusBar')
   };
   updateStatusBarItem();
@@ -41,6 +42,12 @@ function showStatusBarItem(newInfo) {
       info = fzCalculator.addBrotliSize(info, config);
       statusBarItem.text += ` | Br: ${info.brotliSize}`;
     }
+    if (config.showCreatedInStatusBar && info.dateCreated) {
+      var created = new Date(info.dateCreated);
+      if (!isNaN(created.getTime())) {
+        statusBarItem.text += ` | Created: ${created.toLocaleDateString()}`;
+      }
+    }
     statusBarItem.show();
   }
 }
@@ -58,21 +65,22 @@ function updateStatusBarItem() {
   // Set up statusBarItem
   if (cachedLocation !== location) {
     cachedLocation = location;
+    statusBarItem.dispose();
     if (location === 'right') {
       statusBarItem = window.createStatusBarItem(vscode.StatusBarAlignment.Right, 1);
     } else {
       statusBarItem = window.createStatusBarItem(vscode.StatusBarAlignment.Left, 1);
     }
-    statusBarItem.command = 'extension.toggleFilesizeInfo';
+    statusBarItem.command = 'kenFilesize.toggleFilesizeInfo';
     statusBarItem.tooltip = 'Current file size - Click to toggle more info';
   }
   try {
-    var currentEditor = window.activeTextEditor.document;
+    var currentEditor = window.activeTextEditor && window.activeTextEditor.document;
     if (currentEditor && currentEditor.uri.scheme === 'file') {
       hideDetailedInfo();
       showStatusBarItem(fzCalculator.loadFileInfoSync(currentEditor.fileName));
     } else {
-      if (currentEditor.uri.scheme !== 'output') hideStatusBarItem();
+      if (!currentEditor || currentEditor.uri.scheme !== 'output') hideStatusBarItem();
     }
   } catch (e) {
     hideStatusBarItem();
@@ -104,7 +112,7 @@ function showDetailedInfo() {
 }
 
 function hideDetailedInfo() {
-  oc.hide();
+  if (isShowingDetailedInfo) oc.hide();
   isShowingDetailedInfo = false;
 }
 
@@ -122,7 +130,7 @@ function activate(context) {
 
   // Set up statusBarItem
   statusBarItem = window.createStatusBarItem(vscode.StatusBarAlignment.Left, 1);
-  statusBarItem.command = 'extension.toggleFilesizeInfo';
+  statusBarItem.command = 'kenFilesize.toggleFilesizeInfo';
   statusBarItem.tooltip = 'Current file size - Click to toggle more info';
 
   // Global OutputChannel to be used for the extension detailed info
@@ -134,7 +142,7 @@ function activate(context) {
   var onChangeConfig = workspace.onDidChangeConfiguration(updateConfig);
 
   // Show detailed info through custom command
-  var command = vscode.commands.registerCommand('extension.toggleFilesizeInfo', toggleDetailedInfo);
+  var command = vscode.commands.registerCommand('kenFilesize.toggleFilesizeInfo', toggleDetailedInfo);
 
   // Register disposables that get disposed when deactivating
   context.subscriptions.push(onSave);

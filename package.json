@@ -1,13 +1,13 @@
 {
   "name": "vscode-filesize",
-  "displayName": "filesize",
+  "displayName": "filesize (Ken fork)",
   "description": "Show the current file size in the status bar",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "icon": "icon.png",
-  "publisher": "mkxml",
+  "publisher": "ken-jo",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mkxml/vscode-filesize"
+    "url": "https://github.com/ken-jo/vscode-filesize"
   },
   "keywords": [
     "file",
@@ -33,13 +33,13 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.toggleFilesizeInfo",
+        "command": "kenFilesize.toggleFilesizeInfo",
         "title": "Toggle filesize detailed information"
       }
     ],
     "keybindings": [
       {
-        "command": "extension.toggleFilesizeInfo",
+        "command": "kenFilesize.toggleFilesizeInfo",
         "key": "ctrl+shift+'",
         "mac": "cmd+shift+'",
         "when": "editorTextFocus"
@@ -73,6 +73,11 @@
           "type": "boolean",
           "default": false,
           "description": "Defaults to false, whether to show raw size in bytes in the detailed view."
+        },
+        "filesize.showCreatedInStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the active file's creation date in the status bar when available."
         },
         "filesize.showGzipInStatusBar": {
           "type": "boolean",
